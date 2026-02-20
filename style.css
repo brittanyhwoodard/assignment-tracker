@@ -1,0 +1,33 @@
+root {
+    /* Main Colors */
+    --primary-color: #333333;
+    --secondary-color: #999898;
+    --background-color: #E9E4DE;
+    --text-color: #141414;
+
+    /* Accent Colors */
+    --cyan: #3586A3;
+    --sage: #629155;
+    --brick-red: #9C2E25;
+    --amethyst: #8F4B9B;
+    --golden: #D29642;
+    --blush: #CE5579;
+}
+/*
+|--------------------------------------------------------------------------
+| BASE STYLES 
+|--------------------------------------------------------------------------
+| 
+*/
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+html, main, body {
+    font-family: 'Trebuchet MS', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
