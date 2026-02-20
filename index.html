@@ -3,9 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Assignment Tracker</title>
 </head>
-<body>
-    
-</body>
+<main>
+    <header>
+        <h1>Assignment Tracker</h1>
+    </header>
+    <body>
+        <div id="assignment-form">
+            <h2>Add New Assignment</h2>
+            <form id="new-assignment-form">
+                <label for="assignment-title">Title:</label>
+                <input type="text" id="assignment-title" name="assignment-title" required>
+
+                <label for="assignment-course">Course:</label>
+                <input type="text" id="assignment-course" name="assignment-course" required>
+
+                <label for="assignment-type">Type:</label>
+                <select id="assignment-type" name="assignment-type" required>
+                    <option value="homework">Homework</option>
+                    <option value="discussion-post">Discussion Post</option>
+                    <option value="project">Project</option>
+                    <option value="lab">Lab</option>
+                    <option value="presentation">Presentation</option>
+                    <option value="quiz">Quiz</option>
+                    <option value="exam">Exam</option>
+                </select>
+
+                <label for="assignment-due-date">Due Date:</label>
+                <input type="date" id="assignment-due-date" name="assignment-due-date" required>
+
+                <label for="assignment-status">Status:</label>
+                <select id="assignment-status" name="assignment-status" required>
+                    <option value="not-started">Not Started</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                </select>
+
+                <button type="submit">Add Assignment</button>
+            </form>
+            <div id="form-feedback">
+
+            </div>
+        </div>
+        <div id="assignments-view">
+            <h2>Current Assignments</h2>
+            <div id="assignments-list">
+
+            </div>
+        </div>
+    </body>
+    <footer>
+        <p>&copy; 2026 Assignment Tracker</p>
+        <script src="main.js"></script>
+    </footer>
+</main>
 </html>
