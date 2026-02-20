@@ -1,16 +1,8 @@
+let assignments = [];
+
 window.onload = function() {
      assignments = getAssignments();
      renderAssignments(assignments);
-};
-
-let assignments = [];
-let assignment = {
-    id: Date.now(),
-    title: '',
-    course: '',
-    type: '',
-    dueDate: '',
-    status: ''
 };
 
 function saveAssignments(assignments) {
@@ -43,10 +35,14 @@ function renderAssignments(assignments) {
     const assignmentList = document.getElementById('assignments-list');
     assignmentList.innerHTML = '';
     assignments.forEach(assignment => {
-        const assignmentItem = document.createElement('li');
+        const assignmentItem = document.createElement('div');
+        assignmentItem.className = 'assignment-card';
         assignmentItem.textContent = `${assignment.title} - ${assignment.course} - ${assignment.type} - Due: ${assignment.dueDate} - Status: ${assignment.status}`;
         assignmentList.appendChild(assignmentItem);
     });
+    if (assignments.length === 0) {
+        assignmentList.innerHTML = '<p>No assignments yet.</p>';
+    }
 };
 
 document.getElementById('new-assignment-form').addEventListener('submit', function(event) {
