@@ -8,50 +8,77 @@
 </head>
 <body>
     <header>
-        <h1>Assignment Tracker</h1>
+        <img src="images/TrackerLogo.png" alt="Assignment Tracker Logo" id="logo" width="56">
+        <span id="header-text">
+            <h1>Assignment Tracker</h1>
+            <p id="upcoming-assignments">- Upcoming Assignments</p>
+        </span>
+
+        <span id="header-buttons">
+            <button class="circle-btn" id="settings-btn">
+                <img src="images/settings-btn.png" alt="Settings Icon" width="16">
+            </button>
+            <button class="rect-btn" id="add-assignment-btn">
+                <span>＋ Add Assignment</span>
+            </button>
+        </span>
     </header>
-    <main>
-        <div id="assignment-form">
-            <h2>Add New Assignment</h2>
-            <form id="new-assignment-form">
-                <label for="assignment-title">Title:</label>
-                <input type="text" id="assignment-title" name="assignment-title" required>
+    <main id="main-content" >
+        <div class="overlay" id="assignment-add-edit-overlay">
+            <div class="overlay-content" id="assignment-form">
+                <p id="close-form">×</p>
+                <h2 id="form-title">Add Assignment</h2>
+                <form id="new-assignment-form">
+                    <label for="assignment-title">Title</label>
+                    <input type="text" id="assignment-title" name="assignment-title" required>
 
-                <label for="assignment-course">Course:</label>
-                <input type="text" id="assignment-course" name="assignment-course" required>
+                    <label for="assignment-course">Course</label>
+                    <input type="text" id="assignment-course" name="assignment-course" required>
 
-                <label for="assignment-type">Type:</label>
-                <select id="assignment-type" name="assignment-type" required>
-                    <option value="homework">Homework</option>
-                    <option value="discussion-post">Discussion Post</option>
-                    <option value="reading">Reading</option>
-                    <option value="project">Project</option>
-                    <option value="lab">Lab</option>
-                    <option value="presentation">Presentation</option>
-                    <option value="quiz">Quiz</option>
-                    <option value="exam">Exam</option>
-                </select>
+                    <label for="assignment-type">Type</label>
+                    <select id="assignment-type" name="assignment-type">
+                        <option value="homework">Homework</option>
+                        <option value="discussion-post">Discussion Post</option>
+                        <option value="reading">Reading</option>
+                        <option value="project">Project</option>
+                        <option value="lab">Lab</option>
+                        <option value="presentation">Presentation</option>
+                        <option value="quiz">Quiz</option>
+                        <option value="exam">Exam</option>
+                    </select>
 
-                <label for="assignment-due-date">Due Date:</label>
-                <input type="date" id="assignment-due-date" name="assignment-due-date" required>
+                    <label for="assignment-due-date">Due Date</label>
+                    <input type="date" id="assignment-due-date" name="assignment-due-date" required>
 
-                <label for="assignment-status">Status:</label>
-                <select id="assignment-status" name="assignment-status" required>
-                    <option value="not-started">Not Started</option>
-                    <option value="in-progress">In Progress</option>
-                    <option value="completed">Completed</option>
-                </select>
+                    <label for="assignment-status">Status</label>
+                    <select id="assignment-status" name="assignment-status" required>
+                        <option value="not-started">Not Started</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
 
-                <button id="assignment-submit" type="submit">Add Assignment</button>
-            </form>
-            <div id="form-feedback">
-
+                    <button class="rect-btn" id="assignment-submit" type="submit">Add</button>
+                </form>
             </div>
         </div>
-        <div id="assignments-view">
-            <h2>Current Assignments</h2>
-            <div id="assignments-list">
+        
+        <div class="overlay" id="settings-overlay">
+            <div class="overlay-content" id="settings-content">
+                <p id="close-settings">×</p>
+                <h2>Settings</h2>
+                <h4>Settings options coming soon!</h4>
+            </div>
+        </div>
 
+        <div id="assignments-view">
+            <div id="no-assignments">
+                <img src="images/empty-list.png" alt="Empty List Icon" width="100">
+                <p>No assignments yet. Start by adding one!</p>
+            </div>
+
+            <h2 id="assignment-list-header">All Assignments</h2>
+            <div id="assignments-list">
+                <!-- Assignment cards will be dynamically added here -->
             </div>
         </div>
     </main>
@@ -61,3 +88,5 @@
     </footer>
 </body>
 </html>
+</html>
+
