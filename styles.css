@@ -1,8 +1,10 @@
-root {
+:root {
     /* Main Colors */
     --primary-color: #333333;
-    --secondary-color: #999898;
+    --theme-color: #817c79;       /* NOTE - make customizable through settings */
+    --secondary-color: #8a8a8d;
     --background-color: #E9E4DE;
+    --hover-color: #c4bfb7;
     --text-color: #141414;
 
     /* Accent Colors */
@@ -15,7 +17,7 @@ root {
 }
 /*
 |--------------------------------------------------------------------------
-| BASE STYLES 
+| MAIN LAYOUT STYLES 
 |--------------------------------------------------------------------------
 | 
 */
@@ -26,8 +28,301 @@ root {
     box-sizing: border-box;
 }
 
-html, main, body {
-    font-family: 'Trebuchet MS', sans-serif;
+html, body, main {
+    font-family: 'Trebuchet MS', Verdana, Tahoma, sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
+}
+
+header {
+    display: flex;
+    align-items: center;
+    padding: 1% 1% 0.6% 1%;
+    width: 100%;
+    border-bottom: 2.6px solid var(--theme-color);
+}
+
+#header-text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1%;
+}
+
+#header-text h1, p {
+    margin: 0;
+    padding: 1px;
+}
+
+#header-text h1 {
+    font-size: 1.4em;
+}
+
+#header-text p {
+    font-size: 0.9em;
+    color: var(--theme-color);
+    opacity: 0.8;
+}
+
+#header-buttons {
+    display: flex;
+    margin-left: auto;
+    gap: 0.8em;
+}
+
+#main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 86.4vh;
+}
+
+#assignments-view {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: flex-start;
+    padding: 1.5%;
+    width: 98%;
+    height: 98%;
+}
+
+#assignments-view > * {
+    display: flex; /* flex when shown */
+}
+
+#no-assignments {
+    display: none; /* flex when shown */
+    flex-direction: column;
+    align-items: center;
+    margin-top: 8em;
+    gap: 1.5em;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+footer {
+    text-align: right;
+    width: 100%;
+    height: 2.8vh;
+    border-top: 2px solid var(--theme-color);
+}
+
+footer p {
+    margin: 0;
+    padding: 0.2% 1% 0 0;
+    font-size: 0.8em;
+    color: var(--theme-color);
+    opacity: 0.8;
+}
+/*
+|--------------------------------------------------------------------------
+| BUTTONS
+|--------------------------------------------------------------------------
+| 
+*/
+.circle-btn {
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--text-color);
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.circle-btn:hover {
+    background-color: var(--hover-color);
+}
+
+.circle-btn:active {
+    background-color: var(--theme-color);
+    border-color: var(--theme-color);
+}
+
+.rect-btn {
+    padding: 0;
+    width: 180px;
+    height: 32px;
+    border-radius: 8px;
+    border: 2px solid var(--text-color);
+    background-color: var(--text-color);
+    color: var(--background-color);
+    cursor: pointer;
+}
+
+.rect-btn:hover {
+    background-color: var(--hover-color);
+    color: var(--text-color);
+}
+
+.rect-btn:active {
+    background-color: var(--theme-color);
+    border-color: var(--theme-color);
+    color: var(--background-color);
+}
+/*
+|--------------------------------------------------------------------------
+| OVERLAYS
+|--------------------------------------------------------------------------
+| 
+*/
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none; /* flex when shown */
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.overlay-content {
+    display: flex;
+    flex-direction: column;
+    padding: 1% 1.5% 1% 1.5%;
+    width: 480px;
+    height: fit-content;
+    background-color: var(--background-color);
+    border: 2px solid var(--secondary-color);
+    border-radius: 8px;
+}
+
+#close-form, #close-settings {
+    align-self: flex-end;
+    margin: 0;
+    padding: 0;
+    font-size: 1.6em;
+    color: var(--secondary-color);
+    cursor: pointer;
+}
+
+#close-form:hover, #close-settings:hover {
+    color: var(--primary-color);
+}
+
+#new-assignment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    height: 86%;
+    padding: 0 2% 0 2%;
+    margin-top: 1.5em;
+}
+
+#new-assignment-form label {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+#new-assignment-form input, select {
+    padding: 0.4em;
+    font-size: 1em;
+    background-color: white;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    margin-bottom: 1.5em;
+}
+
+#new-assignment-form input:hover, select:hover {
+    border-color: var(--primary-color);
+}
+
+#new-assignment-form input:focus, select:focus {
+    outline: none;
+    border: 2px solid var(--theme-color);
+    border-color: var(--theme-color);
+}
+
+#assignment-submit {
+    align-self: flex-end;
+    margin: 1em 0 1em 0;
+    width: 140px;
+}
+
+
+#settings-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    height: 30%;
+}
+
+#settings-content > h4 {
+    color: var(--primary-color);
+    position: relative;
+    top: 28%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+/*
+|--------------------------------------------------------------------------
+| ASSIGNMENT LIST + ITEMS
+|--------------------------------------------------------------------------
+| 
+*/
+#assignments-view > h2 {
+    margin-bottom: 0.5em;
+}
+
+#assignments-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;
+    gap: 1em;
+}
+
+#assignments-list > .assignment-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 60%;
+    min-width: 475px;
+    padding: 0.8em;
+    border: 1px solid var(--secondary-color);
+    border-radius: 6px;
+}
+
+.assignment-item > .item-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 20%;
+    gap: 1.6em;
+}
+
+.assignment-item > .item-left {
+    padding-left: 0.4em;
+}
+
+.item-buttons > .edit-btn, .delete-btn {
+    border: 1px solid var(--secondary-color);
+    margin-left: 0.5em;
+}
+
+.view-title {
+    font-weight: 500;
+    padding-bottom: 0.2em;
+}
+
+.view-course, .view-due-date, .view-status {
+    color: var(--primary-color);
+    opacity: 0.8;
+    font-size: 0.9em;
+}
+
+.view-type {
+    text-align: right;
+    line-height: 1.2em;
+    font-size: 0.9em;
+    color: var(--primary-color);
+    background-color: var(--hover-color);
+    width: fit-content;
+    padding: 0.2em 0.4em 0.2em 0.4em;
+    border-radius: 4px;
 }
