@@ -2,9 +2,15 @@ let assignments = [];
 let editingId = null;
 
 window.onload = function() {
-     assignments = getAssignments();
-     renderAssignments(assignments);
+    assignments = getAssignments();
+    renderAssignments(assignments);
+    updateUpcomingCount();
 };
+
+function updateUpcomingCount() {
+    const upcomingCount = document.getElementById('upcoming-assignments');
+    upcomingCount.textContent = `${assignments.length} Upcoming Assignment${assignments.length !== 1 ? 's' : ''}`;
+}
 
 function saveAssignments(assignments) {
     localStorage.setItem('assignments', JSON.stringify(assignments));
@@ -22,9 +28,24 @@ function deleteAssignment(id) {
     assignments = assignments.filter(assignment => assignment.id !== id);
     saveAssignments(assignments);
     renderAssignments(assignments);
+    updateUpcomingCount();
 };
 
+function deleteAllAssignments() {
+    // ADD LATER: Add confirmation dialog before deleting all assignments
+};
+
+function resetForm() {
+    const assignmentForm = document.getElementById('new-assignment-form');
+    assignmentForm.reset();
+    editingId = null;
+    document.getElementById('assignment-submit').textContent = 'Add';
+    document.getElementById('form-title').textContent = 'Add Assignment';
+}
+
 function updateAssignment(id) {
+    const assignmentContainer = document.getElementById('assignment-add-edit-overlay');
+    assignmentContainer.style.display = 'flex';
     const assignment = assignments.find(a => a.id === id);
 
     document.getElementById('assignment-title').value = assignment.title;
@@ -34,34 +55,57 @@ function updateAssignment(id) {
     document.getElementById('assignment-status').value = assignment.status;
 
     editingId = id;
-    document.getElementById('assignment-submit').textContent = 'Edit Assignment';
+    document.getElementById('assignment-submit').textContent = 'Save Changes';
+    document.getElementById('form-title').textContent = 'Edit Assignment';
 };
 
 function deleteAllAssignments() {
     assignments = [];
     saveAssignments(assignments);
     renderAssignments(assignments);
+    updateUpcomingCount();
 };
 
 function renderAssignments(assignments) {
     const assignmentList = document.getElementById('assignments-list');
+    const noAssignmentsMessage = document.getElementById('no-assignments');
     assignmentList.innerHTML = '';
     assignments.forEach(assignment => {
         const assignmentItem = document.createElement('div');
-        assignmentItem.className = 'assignment-card';
+        assignmentItem.className = 'assignment-item';
         assignmentItem.dataset.assignmentId = assignment.id;
-        assignmentItem.innerHTML = `<p>${assignment.title} - ${assignment.course} - ${assignment.type} - Due: ${new Date(assignment.dueDate).toLocaleDateString()} - Status: ${assignment.status}</p>
-                                    <button class="delete-btn" onclick="deleteAssignment(${assignment.id})">Delete</button><button class="edit-btn" onclick="updateAssignment(${assignment.id})">Edit</button>`;
+        assignmentItem.innerHTML =      `<span class="item-left">
+                                        <p class="view-title">${assignment.title}</p>
+                                        <p class="view-course">${assignment.course}</p>
+                                        <p class="view-due-date">${new Date(assignment.dueDate).toLocaleDateString()}</p>
+                                        <p class="view-status">${assignment.status}</p>
+                                        </span>
+                                        <span class="item-right">
+                                        <span class="view-type">${assignment.type}</span>
+                                        <span class="item-buttons">
+                                        <button class="circle-btn edit-btn" id="edit-btn">
+                                        <img src="images/edit-btn.png" alt="Edit Icon" width="16" onclick="updateAssignment(${assignment.id})">
+                                        </button>
+                                        <button class="circle-btn delete-btn" id="delete-btn" onclick="deleteAssignment(${assignment.id})">
+                                        <img src="images/delete-btn.png" alt="Delete Icon" width="16">
+                                        </button>
+                                        </span>
+                                        </span>`;
         assignmentList.appendChild(assignmentItem);
     });
     if (assignments.length === 0) {
-        assignmentList.innerHTML = '<p>No assignments yet.</p>';
+        noAssignmentsMessage.style.display = 'flex';
+        document.getElementById('assignment-list-header').style.display = 'none';
+    } else {
+        noAssignmentsMessage.style.display = 'none';
+        document.getElementById('assignment-list-header').style.display = 'block';
     };
 };
 
 document.getElementById('new-assignment-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
+    const assignmentContainer = document.getElementById('assignment-add-edit-overlay');
     const title = document.getElementById('assignment-title').value;
     const course = document.getElementById('assignment-course').value;
     const type = document.getElementById('assignment-type').value;
@@ -75,7 +119,7 @@ document.getElementById('new-assignment-form').addEventListener('submit', functi
                 : a
         );
         editingId = null;
-        document.getElementById('assignment-submit').textContent = 'Add Assignment';
+        resetForm();
     } else {
         assignments.push({
             id: Date.now(),
@@ -89,5 +133,41 @@ document.getElementById('new-assignment-form').addEventListener('submit', functi
 
     saveAssignments(assignments);
     renderAssignments(assignments);
+    updateUpcomingCount();
     event.target.reset();
+    assignmentContainer.style.display = 'none';
+});
+
+document.getElementById('close-form').addEventListener('click', function() {
+    const assignmentContainer = document.getElementById('assignment-add-edit-overlay');
+    assignmentContainer.style.display = 'none';
+    const assignmentForm = document.getElementById('new-assignment-form');
+    assignmentForm.reset();
+    editingId = null;
+    resetForm();
+});
+
+document.getElementById('close-settings').addEventListener('click', function() {
+    const settingsOverlay = document.getElementById('settings-overlay');
+    settingsOverlay.style.display = 'none';
+});
+
+document.getElementById('add-assignment-btn').addEventListener('click', function() {
+    const assignmentContainer = document.getElementById('assignment-add-edit-overlay');
+    assignmentContainer.style.display = 'flex';
+});
+
+document.getElementById('settings-btn').addEventListener('click', function() {
+    const settingsOverlay = document.getElementById('settings-overlay');
+    settingsOverlay.style.display = 'flex';
+});
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        var overlays = document.querySelectorAll('.overlay');
+        overlays.forEach(function(overlay) {
+            overlay.style.display = 'none';
+            resetForm();
+        });
+    };
 });
