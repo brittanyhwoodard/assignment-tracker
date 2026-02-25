@@ -32,6 +32,8 @@ function deleteAssignment(id) {
 };
 
 function deleteAllAssignments() {
+    // TODO: Implement delete all functionality
+    // Clear all assignments from localStorage and update the UI
     // ADD LATER: Add confirmation dialog before deleting all assignments
 };
 
@@ -171,3 +173,4 @@ document.addEventListener('keydown', function(event) {
         });
     };
 });
+
