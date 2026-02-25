@@ -48,7 +48,7 @@ header {
     margin-left: 1%;
 }
 
-#header-text h1, p {
+h1, p {
     margin: 0;
     padding: 1px;
 }
@@ -118,16 +118,19 @@ footer p {
 }
 /*
 |--------------------------------------------------------------------------
-| BUTTONS
+| UNIVERSAL BUTTON STYLES
 |--------------------------------------------------------------------------
 | 
 */
 .circle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 0;
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 2px solid var(--text-color);
+    border: 1px solid var(--secondary-color);
     background-color: transparent;
     cursor: pointer;
 }
@@ -184,12 +187,15 @@ footer p {
 .overlay-content {
     display: flex;
     flex-direction: column;
-    padding: 1% 1.5% 1% 1.5%;
+    padding: 1% 2% 1% 2%;
     width: 480px;
     height: fit-content;
     background-color: var(--background-color);
-    border: 2px solid var(--secondary-color);
+    border: 1px solid var(--secondary-color);
     border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, 
+                rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, 
+                rgba(0, 0, 0, 0.07) 0px 16px 16px;
 }
 
 #close-form, #close-settings {
@@ -210,7 +216,7 @@ footer p {
     flex-direction: column;
     gap: 0.2em;
     height: 86%;
-    padding: 0 2% 0 2%;
+    padding: 0 3% 0 3%;
     margin-top: 1.5em;
 }
 
@@ -244,7 +250,6 @@ footer p {
     width: 140px;
 }
 
-
 #settings-content {
     display: flex;
     flex-direction: column;
@@ -275,14 +280,15 @@ footer p {
     justify-content: flex-start;
     overflow-y: auto;
     gap: 1em;
+    max-width: 1000px;
+    min-width: 475px;
 }
 
 #assignments-list > .assignment-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 60%;
-    min-width: 475px;
+    width: 100%;
     padding: 0.8em;
     border: 1px solid var(--secondary-color);
     border-radius: 6px;
@@ -300,9 +306,9 @@ footer p {
     padding-left: 0.4em;
 }
 
-.item-buttons > .edit-btn, .delete-btn {
-    border: 1px solid var(--secondary-color);
-    margin-left: 0.5em;
+.item-buttons {
+    display: flex;
+    gap: 0.4em;
 }
 
 .view-title {
