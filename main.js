@@ -7,103 +7,7 @@ window.onload = function() {
     updateUpcomingCount();
 };
 
-function updateUpcomingCount() {
-    const upcomingCount = document.getElementById('upcoming-assignments');
-    upcomingCount.textContent = `${assignments.length} Upcoming Assignment${assignments.length !== 1 ? 's' : ''}`;
-}
-
-function saveAssignments(assignments) {
-    localStorage.setItem('assignments', JSON.stringify(assignments));
-};
-
-function getAssignments() {
-    const storedAssignments = localStorage.getItem('assignments');
-    if (storedAssignments) {
-        return JSON.parse(storedAssignments);
-    }
-    return [];
-};
-
-function deleteAssignment(id) {
-    assignments = assignments.filter(assignment => assignment.id !== id);
-    saveAssignments(assignments);
-    renderAssignments(assignments);
-    updateUpcomingCount();
-};
-
-function deleteAllAssignments() {
-    // TODO: Implement delete all functionality
-    // Clear all assignments from localStorage and update the UI
-    // ADD LATER: Add confirmation dialog before deleting all assignments
-};
-
-function resetForm() {
-    const assignmentForm = document.getElementById('new-assignment-form');
-    assignmentForm.reset();
-    editingId = null;
-    document.getElementById('assignment-submit').textContent = 'Add';
-    document.getElementById('form-title').textContent = 'Add Assignment';
-}
-
-function updateAssignment(id) {
-    const assignmentContainer = document.getElementById('assignment-add-edit-overlay');
-    assignmentContainer.style.display = 'flex';
-    const assignment = assignments.find(a => a.id === id);
-
-    document.getElementById('assignment-title').value = assignment.title;
-    document.getElementById('assignment-course').value = assignment.course;
-    document.getElementById('assignment-type').value = assignment.type;
-    document.getElementById('assignment-due-date').value = assignment.dueDate;
-    document.getElementById('assignment-status').value = assignment.status;
-
-    editingId = id;
-    document.getElementById('assignment-submit').textContent = 'Save Changes';
-    document.getElementById('form-title').textContent = 'Edit Assignment';
-};
-
-function deleteAllAssignments() {
-    assignments = [];
-    saveAssignments(assignments);
-    renderAssignments(assignments);
-    updateUpcomingCount();
-};
-
-function renderAssignments(assignments) {
-    const assignmentList = document.getElementById('assignments-list');
-    const noAssignmentsMessage = document.getElementById('no-assignments');
-    assignmentList.innerHTML = '';
-    assignments.forEach(assignment => {
-        const assignmentItem = document.createElement('div');
-        assignmentItem.className = 'assignment-item';
-        assignmentItem.dataset.assignmentId = assignment.id;
-        assignmentItem.innerHTML =      `<span class="item-left">
-                                        <p class="view-title">${assignment.title}</p>
-                                        <p class="view-course">${assignment.course}</p>
-                                        <p class="view-due-date">${new Date(assignment.dueDate).toLocaleDateString()}</p>
-                                        <p class="view-status">${assignment.status}</p>
-                                        </span>
-                                        <span class="item-right">
-                                        <span class="view-type">${assignment.type}</span>
-                                        <span class="item-buttons">
-                                        <button class="circle-btn edit-btn" id="edit-btn">
-                                        <img src="images/edit-btn.png" alt="Edit Icon" width="16" onclick="updateAssignment(${assignment.id})">
-                                        </button>
-                                        <button class="circle-btn delete-btn" id="delete-btn" onclick="deleteAssignment(${assignment.id})">
-                                        <img src="images/delete-btn.png" alt="Delete Icon" width="16">
-                                        </button>
-                                        </span>
-                                        </span>`;
-        assignmentList.appendChild(assignmentItem);
-    });
-    if (assignments.length === 0) {
-        noAssignmentsMessage.style.display = 'flex';
-        document.getElementById('assignment-list-header').style.display = 'none';
-    } else {
-        noAssignmentsMessage.style.display = 'none';
-        document.getElementById('assignment-list-header').style.display = 'block';
-    };
-};
-
+// --- DOM Selectors and Event Listeners ---
 document.getElementById('new-assignment-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -164,6 +68,13 @@ document.getElementById('settings-btn').addEventListener('click', function() {
     settingsOverlay.style.display = 'flex';
 });
 
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('overlay')) {
+        event.target.style.display = 'none';
+        resetForm();
+    };
+});
+
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
         var overlays = document.querySelectorAll('.overlay');
@@ -174,3 +85,95 @@ document.addEventListener('keydown', function(event) {
     };
 });
 
+// --- CRUD Functions ---
+function saveAssignments(assignments) {
+    localStorage.setItem('assignments', JSON.stringify(assignments));
+};
+
+function deleteAssignment(id) {
+    assignments = assignments.filter(assignment => assignment.id !== id);
+    saveAssignments(assignments);
+    renderAssignments(assignments);
+    updateUpcomingCount();
+};
+
+function updateAssignment(id) {
+    const assignmentContainer = document.getElementById('assignment-add-edit-overlay');
+    assignmentContainer.style.display = 'flex';
+    const assignment = assignments.find(a => a.id === id);
+
+    document.getElementById('assignment-title').value = assignment.title;
+    document.getElementById('assignment-course').value = assignment.course;
+    document.getElementById('assignment-type').value = assignment.type;
+    document.getElementById('assignment-due-date').value = assignment.dueDate;
+    document.getElementById('assignment-status').value = assignment.status;
+
+    editingId = id;
+    document.getElementById('assignment-submit').textContent = 'Save Changes';
+    document.getElementById('form-title').textContent = 'Edit Assignment';
+};
+
+function deleteAllAssignments() {
+    assignments = [];
+    saveAssignments(assignments);
+    renderAssignments(assignments);
+    updateUpcomingCount();
+};
+
+// --- Helper Functions ---
+function renderAssignments(assignments) {
+    const assignmentList = document.getElementById('assignments-list');
+    const noAssignmentsMessage = document.getElementById('no-assignments');
+    assignmentList.innerHTML = '';
+    assignments.forEach(assignment => {
+        const assignmentItem = document.createElement('div');
+        assignmentItem.className = 'assignment-item';
+        assignmentItem.dataset.assignmentId = assignment.id;
+        assignmentItem.innerHTML =      `<span class="item-left">
+                                        <p class="view-title">${assignment.title}</p>
+                                        <p class="view-course">${assignment.course}</p>
+                                        <p class="view-due-date">${new Date(assignment.dueDate).toLocaleDateString()}</p>
+                                        <p class="view-status">${assignment.status}</p>
+                                        </span>
+                                        <span class="item-right">
+                                        <span class="view-type">${assignment.type}</span>
+                                        <span class="item-buttons">
+                                        <button class="circle-btn edit-btn" id="edit-btn">
+                                        <img src="images/edit-btn.png" alt="Edit Icon" width="16" onclick="updateAssignment(${assignment.id})">
+                                        </button>
+                                        <button class="circle-btn delete-btn" id="delete-btn" onclick="deleteAssignment(${assignment.id})">
+                                        <img src="images/delete-btn.png" alt="Delete Icon" width="16">
+                                        </button>
+                                        </span>
+                                        </span>`;
+        assignmentList.appendChild(assignmentItem);
+    });
+    if (assignments.length === 0) {
+        noAssignmentsMessage.style.display = 'flex';
+        document.getElementById('assignment-list-header').style.display = 'none';
+    } else {
+        noAssignmentsMessage.style.display = 'none';
+        document.getElementById('assignment-list-header').style.display = 'block';
+    };
+};
+
+function getAssignments() {
+    const storedAssignments = localStorage.getItem('assignments');
+    if (storedAssignments) {
+        return JSON.parse(storedAssignments);
+    }
+    return [];
+};
+
+function updateUpcomingCount() {
+    const upcomingCount = document.getElementById('upcoming-assignments');
+    upcomingCount.textContent = `${assignments.length} Upcoming Assignment${assignments.length !== 1 ? 's' : ''}`;
+};
+
+function resetForm() {
+    const assignmentForm = document.getElementById('new-assignment-form');
+    assignmentForm.reset();
+    editingId = null;
+    document.getElementById('assignment-submit').textContent = 'Add';
+    document.getElementById('form-title').textContent = 'Add Assignment';
+};
