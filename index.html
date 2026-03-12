@@ -16,7 +16,7 @@
 
         <span id="header-buttons">
             <button class="circle-btn" id="settings-btn">
-                <img src="images/settings-btn.png" alt="Settings Icon" width="16">
+                <img src="images/settings-btn.png" alt="Settings Icon" width="16" id="settings-icon">
             </button>
             <button class="rect-btn" id="add-assignment-btn">
                 <span>＋ Add Assignment</span>
@@ -37,14 +37,14 @@
 
                     <label for="assignment-type">Type</label>
                     <select id="assignment-type" name="assignment-type">
-                        <option value="homework">Homework</option>
-                        <option value="discussion-post">Discussion Post</option>
-                        <option value="reading">Reading</option>
-                        <option value="project">Project</option>
-                        <option value="lab">Lab</option>
-                        <option value="presentation">Presentation</option>
-                        <option value="quiz">Quiz</option>
-                        <option value="exam">Exam</option>
+                        <option value="Homework">Homework</option>
+                        <option value="Discussion Post">Discussion Post</option>
+                        <option value="Reading">Reading</option>
+                        <option value="Project">Project</option>
+                        <option value="Lab">Lab</option>
+                        <option value="Presentation">Presentation</option>
+                        <option value="Quiz">Quiz</option>
+                        <option value="Exam">Exam</option>
                     </select>
 
                     <label for="assignment-due-date">Due Date</label>
@@ -57,6 +57,27 @@
                         <option value="completed">Completed</option>
                     </select>
 
+                    <label for="color-options">Color</label>
+                    <span id="color-options">
+                        <input type="radio" id="cyan" name="assignment-color" value="cyan">
+                        <label for="cyan" class="assignment-color" style="background-color: var(--cyan)"></label>
+
+                        <input type="radio" id="sage" name="assignment-color" value="sage">
+                        <label for="sage" class="assignment-color" style="background-color: var(--sage)"></label>
+
+                        <input type="radio" id="brick-red" name="assignment-color" value="brick-red">
+                        <label for="brick-red" class="assignment-color" style="background-color: var(--brick-red)"></label>
+
+                        <input type="radio" id="amethyst" name="assignment-color" value="amethyst">
+                        <label for="amethyst" class="assignment-color" style="background-color: var(--amethyst)"></label>
+
+                        <input type="radio" id="golden" name="assignment-color" value="golden">
+                        <label for="golden" class="assignment-color" style="background-color: var(--golden)"></label>
+
+                        <input type="radio" id="blush" name="assignment-color" value="blush">
+                        <label for="blush" class="assignment-color" style="background-color: var(--blush)"></label>
+                    </span>
+
                     <button class="rect-btn" id="assignment-submit" type="submit">Add</button>
                 </form>
             </div>
@@ -66,13 +87,39 @@
             <div class="overlay-content" id="settings-content">
                 <p id="close-settings">×</p>
                 <h2>Settings</h2>
-                <h4>Settings options coming soon!</h4>
+                <h4>Customize your experience and preferences</h4>
+                <div id="settings-options">
+                    <div class="settings-option">
+                        <div>
+                            <h3>Dark Mode</h3>
+                            <p>Use dark theme to reduce eye strain</p>
+                        </div>
+                            <div class="checkbox-wrapper-41">
+                                <input disabled type="checkbox" id="dark-mode-toggle">
+                            </div>
+                    </div>
+                    <div class="settings-option">
+                        <label for="default-view">Default View</label>
+                        <select id="default-view" disabled>
+                            <option value="list-default" selected>List</option>
+                            <option value="calendar-default">Calendar</option>
+                        </select>
+                    </div>
+                    <div class="settings-option">
+                        <label for="font-size-select">Font Size</label>
+                        <select id="font-size-select" disabled>
+                            <option value="small">Smaller</option>
+                            <option value="default" selected>Default</option>
+                            <option value="large">Larger</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div id="assignments-view">
             <div id="no-assignments">
-                <img src="images/empty-list.png" alt="Empty List Icon" width="100">
+                <img src="images/empty-list.png" alt="Empty List Icon" width="100" id="empty-list-icon">
                 <p>No assignments yet. Start by adding one!</p>
             </div>
 
@@ -88,5 +135,3 @@
     </footer>
 </body>
 </html>
-</html>
-
