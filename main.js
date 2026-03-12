@@ -17,11 +17,12 @@ document.getElementById('new-assignment-form').addEventListener('submit', functi
     const type = document.getElementById('assignment-type').value;
     const dueDate = document.getElementById('assignment-due-date').value;
     const status = document.getElementById('assignment-status').value;
+    const color = document.querySelector('input[name="assignment-color"]:checked').value;
 
     if (editingId) {
         assignments = assignments.map(a =>
             a.id === editingId
-                ? { id: editingId, title, course, type, dueDate, status }
+                ? { id: editingId, title, course, type, dueDate, status, color }
                 : a
         );
         editingId = null;
@@ -33,7 +34,8 @@ document.getElementById('new-assignment-form').addEventListener('submit', functi
             course,
             type,
             dueDate,
-            status
+            status,
+            color
         });
     }
 
@@ -130,6 +132,7 @@ function renderAssignments(assignments) {
         assignmentItem.className = 'assignment-item';
         assignmentItem.dataset.assignmentId = assignment.id;
         assignmentItem.innerHTML =      `<span class="item-left">
+                                        <div class="view-color" style="background-color: var(--${assignment.color});"></div>
                                         <p class="view-title">${assignment.title}</p>
                                         <p class="view-course">${assignment.course}</p>
                                         <p class="view-due-date">${new Date(assignment.dueDate).toLocaleDateString()}</p>
@@ -138,11 +141,11 @@ function renderAssignments(assignments) {
                                         <span class="item-right">
                                         <span class="view-type">${assignment.type}</span>
                                         <span class="item-buttons">
-                                        <button class="circle-btn edit-btn" id="edit-btn">
-                                        <img src="images/edit-btn.png" alt="Edit Icon" width="16" onclick="updateAssignment(${assignment.id})">
+                                        <button class="circle-btn edit-btn" onclick="updateAssignment(${assignment.id})">
+                                        <img src="images/edit-btn.png" alt="Edit Icon" class="edit-btn" width="16">
                                         </button>
-                                        <button class="circle-btn delete-btn" id="delete-btn" onclick="deleteAssignment(${assignment.id})">
-                                        <img src="images/delete-btn.png" alt="Delete Icon" width="16">
+                                        <button class="circle-btn delete-btn" onclick="deleteAssignment(${assignment.id})">
+                                        <img src="images/delete-btn.png" alt="Delete Icon" class="delete-btn" width="16">
                                         </button>
                                         </span>
                                         </span>`;
@@ -177,3 +180,4 @@ function resetForm() {
     document.getElementById('assignment-submit').textContent = 'Add';
     document.getElementById('form-title').textContent = 'Add Assignment';
 };
+
