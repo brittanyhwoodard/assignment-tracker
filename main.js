@@ -249,24 +249,24 @@ function renderAssignmentsInto(assignments, container) {
         assignmentItem.className = 'assignment-item';
         assignmentItem.dataset.assignmentId = assignment.id;
         assignmentItem.innerHTML =      `
-            <span class="item-left">
+            <div class="item-left">
                 <div class="view-color" style="background-color: var(--${assignment.color});"></div>
                 <p class="view-title">${assignment.title}</p>
                 <p class="view-course">${assignment.course}</p>
                 <p class="view-due-date">${new Date(assignment.dueDate.replace(/-/g, '/')).toLocaleDateString()}</p>
                 <p class="view-status">${assignment.status}</p>
-            </span>
-            <span class="item-right">
+            </div>
+            <div class="item-right">
                 <span class="view-type">${assignment.type}</span>
-                <span class="item-buttons">
+                <div class="item-buttons">
                 <button class="circle-btn edit-btn" onclick="updateAssignment(${assignment.id})">
                 <img src="images/edit-btn.png" alt="Edit Icon" class="edit-btn" width="16">
                 </button>
                 <button class="circle-btn delete-btn" onclick="deleteAssignment(${assignment.id})">
                 <img src="images/delete-btn.png" alt="Delete Icon" class="delete-btn" width="16">
                 </button>
-                </span>
-            </span>`;
+                </div>
+            </div>`;
         container.appendChild(assignmentItem);
 
     });
