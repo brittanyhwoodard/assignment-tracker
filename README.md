@@ -7,6 +7,8 @@ Features
 - Modal-based add/edit interface
 - Dynamic rendering
 - Responsive layout
+- Custom color coding for each assignment
+- - List sorting options
 
 Tech Stack
 - HTML
@@ -14,8 +16,6 @@ Tech Stack
 - Vanilla JavaScript
 
 Future Improvements
-- Custom color coding for each assignment
-- List sorting options
 - Calendar view
 - Import/export
 - User theme customization
@@ -24,6 +24,10 @@ Screenshots
 
 <img width="307" height="77" alt="Header" src="https://github.com/user-attachments/assets/f38df211-01ec-46bd-b95b-015c80939ef1" />
 <img width="1358" height="773" alt="Default page" src="https://github.com/user-attachments/assets/f2d1e39a-2cd8-4cbf-bc32-5a11c56ac1b0" />
-<img width="1358" height="773" alt="Example assignments" src="https://github.com/user-attachments/assets/3ec8cf3c-2296-4887-84d9-f7190afd3bc2" />
-<img width="1358" height="773" alt="Add assignment overlay" src="https://github.com/user-attachments/assets/11dabb9f-8abf-490f-bd3d-cc468eedfae1" />
-<img width="1358" height="771" alt="Edit assignment overlay" src="https://github.com/user-attachments/assets/fe715096-bdc9-45ac-ac4c-c73643cb30c7" />
+<img width="1514" height="863" alt="Example Assignments" src="https://github.com/user-attachments/assets/795b7a67-c9f9-41be-8220-c2419e894087" />
+<img width="1515" height="865" alt="Add Assignment Overlay" src="https://github.com/user-attachments/assets/babc26c6-922c-45ef-ac0b-14576520d99e" />
+<img width="1515" height="867" alt="Edit Assignment Overlay" src="https://github.com/user-attachments/assets/e3213453-79d3-47a0-b205-4359e4416c13" />
+
+
+
+
