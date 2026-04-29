@@ -473,7 +473,7 @@ footer p {
     grid-area: vDate;
 }
 
-.viewStatus {
+.view-status {
     grid-area: vStatus;
 }
 
@@ -604,3 +604,4 @@ footer p {
 .viewSetting-selection input[type="checkbox"]:checked::before {
     transform: scale(1);
 }
+
