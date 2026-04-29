@@ -11,7 +11,7 @@
         <img src="images/TrackerLogo.png" alt="Assignment Tracker Logo" id="logo" width="56">
         <span id="header-text">
             <h1>Assignment Tracker</h1>
-            <p id="upcoming-assignments">- Upcoming Assignments</p>
+            <p id="upcoming-assignments">- Total Assignments</p>
         </span>
 
         <span id="header-buttons">
@@ -59,7 +59,7 @@
 
                     <label for="color-options">Color</label>
                     <span id="color-options">
-                        <input type="radio" id="cyan" name="assignment-color" value="cyan">
+                        <input type="radio" id="cyan" name="assignment-color" value="cyan" checked>
                         <label for="cyan" class="assignment-color" style="background-color: var(--cyan)"></label>
 
                         <input type="radio" id="sage" name="assignment-color" value="sage">
@@ -89,6 +89,7 @@
                 <h2>Settings</h2>
                 <h4>Customize your experience and preferences</h4>
                 <div id="settings-options">
+                    <!-- HIDDEN FOR NOW
                     <div class="settings-option">
                         <div>
                             <h3>Dark Mode</h3>
@@ -98,6 +99,7 @@
                                 <input disabled type="checkbox" id="dark-mode-toggle">
                             </div>
                     </div>
+                    --> 
                     <div class="settings-option">
                         <label for="default-view">Default View</label>
                         <select id="default-view" disabled>
@@ -117,15 +119,62 @@
             </div>
         </div>
 
+        <div id="no-assignments"> 
+            <img src="images/empty-list.png" alt="Empty List Icon" width="100" id="empty-list-icon">
+            <p>No assignments yet. Start by adding one!</p>
+        </div>
         <div id="assignments-view">
-            <div id="no-assignments">
-                <img src="images/empty-list.png" alt="Empty List Icon" width="100" id="empty-list-icon">
-                <p>No assignments yet. Start by adding one!</p>
-            </div>
-
-            <h2 id="assignment-list-header">All Assignments</h2>
             <div id="assignments-list">
                 <!-- Assignment cards will be dynamically added here -->
+            </div>
+            <div id="assignments-sidebar">
+                <h2>Assignment Overview</h2>
+                <div id="bar-chart-container">
+                    <span id="numCompleted" class="chart-section" style="width:20%; background-color:DarkOliveGreen">4 Completed</span>
+                    <span id="numStarted" class="chart-section" style="width:40%; background-color:DarkGoldenRod">12 In Progress</span>
+                    <span id="numNotStarted" class="chart-section" style="width:40%; background-color:Brown">26 Not Started</span>
+                </div>
+                
+                <h2>Course Overview</h2>
+                <p id="numCourses">You have 5 courses:</p>
+                <div id="courses-container">
+                    <!-- Course cards will be dynamically added here -->
+                </div>
+
+                <h2>Filtering Options</h2>
+                <div id="list-filer-options">
+                    <p>Customize what list view shows you</p>
+                    <div id="viewSetting-container">
+                        
+                        <label for="show-overdue" class="viewSetting-selection">
+                            <input type="checkbox" id="show-overdue" name="show-overdue" value="showOverdue" checked>
+                            Overdue
+                        </label>
+
+                        <label for="show-today" class="viewSetting-selection">
+                            <input type="checkbox" id="show-today" name="show-today" value="showToday" checked>
+                            Due Today
+                        </label>
+
+                        <label for="show-week" class="viewSetting-selection">
+                            <input type="checkbox" id="show-week" name="show-week" value="showWeek" checked>
+                            Due This Week
+                        </label>
+
+                        <label for="show-later" class="viewSetting-selection">
+                            <input type="checkbox" id="show-later" name="show-later" value="showLater" checked>
+                            Due Later
+                        </label>
+
+                        <label for="show-complete" class="viewSetting-selection">
+                            <input type="checkbox" id="show-complete" name="show-complete" value="showCompleted">
+                            Completed
+                        </label>
+
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </main>
