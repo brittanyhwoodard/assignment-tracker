@@ -80,11 +80,22 @@ h1, p {
 
 #assignments-view {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: flex-start;
     padding: 1.5%;
     width: 98%;
     height: 98%;
+}
+
+@media (max-width: 600px) {
+    #assignments-view {
+        flex-direction: column;
+        overflow-y: scroll;
+    }
+    #assignments-sidebar {
+        border-top: 2px solid var(--theme-color);
+        width: 100%;
+    }
 }
 
 #assignments-view > * {
@@ -93,9 +104,10 @@ h1, p {
 
 #no-assignments {
     display: none; /* flex when shown */
+    position: absolute;
     flex-direction: column;
     align-items: center;
-    margin-top: 8em;
+    margin-bottom: 2em;
     gap: 1.5em;
     font-size: 1.2em;
     font-weight: bold;
@@ -368,11 +380,12 @@ footer p {
 
 /*
 |--------------------------------------------------------------------------
-| ASSIGNMENT LIST + ITEMS
+| ASSIGNMENT LIST
 |--------------------------------------------------------------------------
 | 
 */
-#assignments-view > h2 {
+.assignment-section-header {
+    font-size: 1.2em;
     margin-bottom: 0.5em;
 }
 
@@ -380,13 +393,26 @@ footer p {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    width: 100%;
     overflow-y: auto;
     gap: 1em;
     max-width: 1000px;
     min-width: 475px;
+    padding-right: 12px;
 }
 
-#assignments-list > .assignment-item {
+.assignment-section-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;
+    gap: 1em;
+    max-width: 1000px;
+    min-width: 475px;
+    padding-right: 12px;
+}
+
+.assignment-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -460,4 +486,121 @@ footer p {
     width: fit-content;
     padding: 0.2em 0.4em 0.2em 0.4em;
     border-radius: 4px;
+}
+/*
+|--------------------------------------------------------------------------
+| ASSIGNMENT SIDEBAR
+|--------------------------------------------------------------------------
+| 
+*/
+#assignments-sidebar {
+    display: flex;
+    padding: 6px;
+    flex-direction: column;
+    flex: 1;
+    min-width: 240px;
+}
+
+#assignments-sidebar h2{
+    font-size: 1.4em;
+    margin-bottom: 0.6em;
+}
+
+#bar-chart-container {
+    display: flex;
+    align-self: center;
+    background-color: #d1cac2;
+    box-sizing: border-box;
+    margin-bottom: 0.8em;
+    border-radius: 6px;
+    width: 98%;
+    height: 32px;
+}
+
+.chart-section {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 6px;
+    height: 32px;
+    background-color: #8a8a8d;
+    color: #e9e4de46;
+    font-size: smaller;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.chart-section:hover {
+    color: var(--background-color);
+    cursor: default;
+}
+
+#courses-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-sizing: border-box;
+    padding: 4px;
+    border-radius: 6px;
+    gap: 4px;
+    border: 2px solid var(--theme-color);
+    margin-bottom: 0.8em;
+}
+
+.course-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--hover-color);
+    border-radius: 6px;
+    height: 32px;
+    padding: 4px;
+}
+
+#list-filer-options p {
+    margin-bottom: 0.2em;
+    text-align: center;
+}
+
+#viewSetting-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px;
+    padding: 4px;
+    border-top: 2px solid var(--theme-color);
+    border-bottom: 2px solid var(--theme-color);
+}
+
+.viewSetting-selection {
+    display: grid;
+    grid-template-columns: 1em auto;
+    gap: 0.5em;
+}
+
+.viewSetting-selection input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    font: inherit;
+    margin: 0;
+    color: var(--theme-color);
+    width: 1em;
+    height: 1em;
+    border: 2px solid var(--secondary-color);
+    border-radius: 0.15em;
+    transform: translateY(2px);
+    display: grid;
+    place-content: center;
+}
+
+.viewSetting-selection input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    border-radius: 2px;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--theme-color);
+}
+
+.viewSetting-selection input[type="checkbox"]:checked::before {
+    transform: scale(1);
 }
