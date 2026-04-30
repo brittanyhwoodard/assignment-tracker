@@ -15,9 +15,6 @@
         </span>
 
         <span id="header-buttons">
-            <button class="circle-btn" id="settings-btn">
-                <img src="images/settings-btn.png" alt="Settings Icon" width="16" id="settings-icon">
-            </button>
             <button class="rect-btn" id="add-assignment-btn">
                 <span>＋ Add Assignment</span>
             </button>
@@ -123,6 +120,17 @@
             <img src="images/empty-list.png" alt="Empty List Icon" width="100" id="empty-list-icon">
             <p>No assignments yet. Start by adding one!</p>
         </div>
+
+        <div id="main-buttons">
+            <label class="switch">
+                <input type="checkbox" id="view-toggle" aria-label="Toggle between List and Calendar view">
+                <span class="slider" aria-hidden="true">
+                    <span class="toggle-option toggle-list">List</span>
+                    <span class="toggle-option toggle-calendar">Calendar</span>
+                </span>
+            </label>
+        </div>
+        
         <div id="assignments-view">
             <div id="assignments-list">
                 <!-- Assignment cards will be dynamically added here -->
@@ -130,9 +138,9 @@
             <div id="assignments-sidebar">
                 <h2>Assignment Overview</h2>
                 <div id="bar-chart-container">
-                    <span id="numCompleted" class="chart-section" style="width:20%; background-color:DarkOliveGreen">4 Completed</span>
-                    <span id="numStarted" class="chart-section" style="width:40%; background-color:DarkGoldenRod">12 In Progress</span>
-                    <span id="numNotStarted" class="chart-section" style="width:40%; background-color:Brown">26 Not Started</span>
+                    <span id="numCompleted" class="chart-section" style="width:20%; background-color:DarkOliveGreen; border-radius: 6px 0 0 6px;">4 Completed</span>
+                    <span id="numStarted" class="chart-section" style="width:40%; background-color:DarkGoldenRod; border-radius: 0;">12 In Progress</span>
+                    <span id="numNotStarted" class="chart-section" style="width:40%; background-color:Brown; border-radius: 0 6px 6px 0;">26 Not Started</span>
                 </div>
                 
                 <h2>Course Overview</h2>
@@ -177,6 +185,11 @@
 
             </div>
         </div>
+
+        <div id="calendar-view">
+            
+        </div>
+
     </main>
     <footer>
         <p>&copy; 2026 Assignment Tracker</p>
