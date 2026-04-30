@@ -2,6 +2,7 @@ let assignments = [];
 let courses = [];
 let editingId = null;
 const viewSettingInputs = document.querySelectorAll('.viewSetting-selection input');
+const viewToggleInput = document.getElementById('view-toggle');
 const defaultSettings = {
     showOverdue: true,
     showToday: true,
@@ -10,11 +11,14 @@ const defaultSettings = {
     showCompleted: false
 };
 let viewSettings = JSON.parse(localStorage.getItem('viewSettings')) || defaultSettings;
+let currentView = localStorage.getItem('selectedView') || 'list';
+let displayedCalendarDate = new Date();
 
 window.onload = function() {
     assignments = getAssignments();
-    renderAssignmentsView();
     initViewSettings();
+    renderAssignmentsView();
+    setCurrentView(currentView);
 };
 
 // --- DOM Selectors and Event Listeners ---
@@ -77,6 +81,10 @@ viewSettingInputs.forEach(input => {
 
         renderAssignmentsView();
     });
+});
+
+viewToggleInput.addEventListener('change', function() {
+    setCurrentView(this.checked ? 'calendar' : 'list');
 });
 
 document.getElementById('close-settings').addEventListener('click', function() {
@@ -209,10 +217,13 @@ function renderAssignmentsView() {
     const overviewContainer = document.getElementById('assignments-sidebar');
 
     container.innerHTML = '';
+    renderCalendarView();
+    updateTotalCount();
 
     if (assignments.length === 0) {
-        noAssignmentsMessage.style.display = 'flex';
+        noAssignmentsMessage.style.display = currentView === 'list' ? 'flex' : 'none';
         overviewContainer.style.display = 'none';
+        updateDisplayedView();
         return;
     };
 
@@ -236,9 +247,9 @@ function renderAssignmentsView() {
     if (viewSettings.showCompleted)
         renderSection("Completed", categorized.completed);
 
-    updateTotalCount();
     findAndPopulateCourses();
     renderBarChart();
+    updateDisplayedView();
 };
 
 function renderAssignmentsInto(assignments, container) {
@@ -308,6 +319,152 @@ function updateTotalCount() {
     upcomingCount.textContent = `${assignments.length} Total Assignment${assignments.length !== 1 ? 's' : ''}`;
 };
 
+function setCurrentView(view) {
+    currentView = view === 'calendar' ? 'calendar' : 'list';
+    viewToggleInput.checked = currentView === 'calendar';
+    localStorage.setItem('selectedView', currentView);
+    updateDisplayedView();
+};
+
+function updateDisplayedView() {
+    const assignmentsView = document.getElementById('assignments-view');
+    const calendarView = document.getElementById('calendar-view');
+    const noAssignmentsMessage = document.getElementById('no-assignments');
+
+    assignmentsView.style.display = currentView === 'list' ? 'flex' : 'none';
+    calendarView.style.display = currentView === 'calendar' ? 'flex' : 'none';
+
+    if (currentView === 'calendar') {
+        noAssignmentsMessage.style.display = 'none';
+    } else {
+        noAssignmentsMessage.style.display = assignments.length === 0 ? 'flex' : 'none';
+    }
+};
+
+function renderCalendarView() {
+    const calendarContainer = document.getElementById('calendar-view');
+    const today = new Date();
+    const year = displayedCalendarDate.getFullYear();
+    const month = displayedCalendarDate.getMonth();
+    const firstDayOfMonth = new Date(year, month, 1);
+    const lastDayOfMonth = new Date(year, month + 1, 0);
+    const firstWeekday = firstDayOfMonth.getDay();
+    const totalDays = lastDayOfMonth.getDate();
+    const assignmentsByDate = groupAssignmentsByDate(assignments);
+
+    calendarContainer.innerHTML = '';
+
+    const calendarHeader = document.createElement('div');
+    calendarHeader.className = 'calendar-header';
+
+    const calendarTitle = document.createElement('h2');
+    calendarTitle.textContent = firstDayOfMonth.toLocaleDateString(undefined, {
+        month: 'long',
+        year: 'numeric'
+    });
+
+    const prevButton = document.createElement('button');
+    prevButton.className = 'circle-btn calendar-nav-btn';
+    prevButton.type = 'button';
+    prevButton.innerHTML = '<img src="images/left-arrow-btn.png" alt="Previous Icon" width="16" id="previous-icon">';
+    prevButton.addEventListener('click', function() {
+        changeCalendarMonth(-1);
+    });
+
+    const nextButton = document.createElement('button');
+    nextButton.className = 'circle-btn calendar-nav-btn';
+    nextButton.type = 'button';
+    nextButton.innerHTML = '<img src="images/right-arrow-btn.png" alt="Next Icon" width="16" id="next-icon">';
+    nextButton.addEventListener('click', function() {
+        changeCalendarMonth(1);
+    });
+
+    calendarHeader.appendChild(calendarTitle);
+    calendarHeader.appendChild(prevButton);
+    calendarHeader.appendChild(nextButton);
+    calendarContainer.appendChild(calendarHeader);
+
+    const calendarGrid = document.createElement('div');
+    calendarGrid.className = 'calendar-grid';
+
+    ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(dayName => {
+        const weekday = document.createElement('div');
+        weekday.className = 'calendar-weekday';
+        weekday.textContent = dayName;
+        calendarGrid.appendChild(weekday);
+    });
+
+    for (let i = 0; i < firstWeekday; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day empty';
+        calendarGrid.appendChild(emptyDay);
+    }
+
+    for (let day = 1; day <= totalDays; day++) {
+        const dateKey = formatDateKey(year, month, day);
+        const dayAssignments = assignmentsByDate[dateKey] || [];
+        const calendarDay = document.createElement('div');
+        calendarDay.className = 'calendar-day';
+
+        if (
+            today.getFullYear() === year &&
+            today.getMonth() === month &&
+            today.getDate() === day
+        ) {
+            calendarDay.classList.add('today');
+        }
+
+        const dayNumber = document.createElement('span');
+        dayNumber.className = 'calendar-day-number';
+        dayNumber.textContent = day;
+        calendarDay.appendChild(dayNumber);
+
+        dayAssignments.forEach(assignment => {
+            const assignmentPill = document.createElement('button');
+            assignmentPill.className = 'calendar-assignment';
+            assignmentPill.type = 'button';
+            assignmentPill.textContent = assignment.title;
+            assignmentPill.style.borderLeftColor = `var(--${assignment.color})`;
+            assignmentPill.addEventListener('click', function() {
+                updateAssignment(assignment.id);
+            });
+            calendarDay.appendChild(assignmentPill);
+        });
+
+        calendarGrid.appendChild(calendarDay);
+    }
+
+    calendarContainer.appendChild(calendarGrid);
+};
+
+function changeCalendarMonth(monthChange) {
+    displayedCalendarDate = new Date(
+        displayedCalendarDate.getFullYear(),
+        displayedCalendarDate.getMonth() + monthChange,
+        1
+    );
+
+    renderCalendarView();
+};
+
+function groupAssignmentsByDate(assignments) {
+    return assignments.reduce((groups, assignment) => {
+        if (!groups[assignment.dueDate]) {
+            groups[assignment.dueDate] = [];
+        }
+
+        groups[assignment.dueDate].push(assignment);
+        return groups;
+    }, {});
+};
+
+function formatDateKey(year, month, day) {
+    const formattedMonth = String(month + 1).padStart(2, '0');
+    const formattedDay = String(day).padStart(2, '0');
+
+    return `${year}-${formattedMonth}-${formattedDay}`;
+};
+
 function resetForm() {
     const assignmentForm = document.getElementById('new-assignment-form');
     assignmentForm.reset();
@@ -339,8 +496,6 @@ function initViewSettings() {
             input.parentElement.style.cursor = hasAssignments ? "pointer" : "not-allowed";
         }
     });
-
-    renderAssignmentsView();
 };
 
 function findAndPopulateCourses() {
@@ -366,18 +521,21 @@ function renderBarChart() {
     const categorized = categorizeAssignmentsProgress(assignments);
     
     if (categorized.completed.length > 0) {
+        completed.style.display = 'flex';
         completed.style.width = `${( (categorized.completed.length / assignments.length) * 100)}%`;
         completed.innerHTML = `${categorized.completed.length} Completed`;
     } else {
         completed.style.display = 'none';
     }
     if (categorized.inProgress.length > 0) {
+        inProgress.style.display = 'flex';
         inProgress.style.width = `${( (categorized.inProgress.length / assignments.length) * 100)}%`;
         inProgress.innerHTML = `${categorized.inProgress.length} In Progress`;
     } else {
         inProgress.style.display = 'none';
     }
     if (categorized.notStarted.length > 0) {
+        notStarted.style.display = 'flex';
         notStarted.style.width = `${( (categorized.notStarted.length / assignments.length) * 100)}%`;
         notStarted.innerHTML = `${categorized.notStarted.length} Not Started`;
     } else {
